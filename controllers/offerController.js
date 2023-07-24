@@ -18,6 +18,7 @@ class OffersController {
     }
     return res.json(offers);
   }
+
   async createOffers(req, res, next) {
     try {
       const { name, shortDescription, fullDescription, price } = req.body;
@@ -60,14 +61,12 @@ class OffersController {
       const { id } = req.params;
       const { name, shortDescription, fullDescription, price } = req.body;
 
-      
-
       const offer = await Offers.findOne({ where: { id } });
-  
+
       if (!offer) {
         return next(ApiError.notFound('Offer not found'));
       }
-  
+
       // Оновлення полів оголошення, якщо дані існують
       if (name) {
         offer.name = name;
@@ -86,31 +85,31 @@ class OffersController {
         // Обробка завантаженого зображення, якщо воно є
         const allowedExtensions = ['.jpg', '.png', '.gif', '.jpeg'];
         const fileExtension = path.extname(file.name);
-  
+
         if (!allowedExtensions.includes(fileExtension)) {
           return next(ApiError.badRequest('Неприпустимий тип файлу'));
         }
-  
+
         const fileName = uuid.v4() + fileExtension;
         const uploadPath = path.resolve(__dirname, '..', 'static', fileName);
-  
+
         await file.mv(uploadPath, (err) => {
           if (err) {
             return next(ApiError.internalServerError('Помилка при завантаженні зображення'));
           }
         });
-  
+
         offer.img = fileName;
       }
-  
+
       await offer.save();
-  
+
       res.json(offer);
     } catch (error) {
       next(ApiError.badRequest(error.message));
     }
   }
-  
+
 
   async deleteOffer(req, res, next) {
     console.log('deleteOffer working!!!')
