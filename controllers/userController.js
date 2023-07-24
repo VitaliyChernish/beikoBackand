@@ -16,7 +16,6 @@ const generateJwt = (id, nickName, role) => {
 class UserController {
   async registration(req, res, next) {
     const { nickName, password, company, role, email, instagramm, telegramm, address, phone } = req.body;
-    console.log('nickName: ', req.files.file)
       if (!nickName || !password) {
         return next(ApiError.forbidden('Некоректний логін або пароль'));
       }
@@ -85,6 +84,7 @@ class UserController {
       if (!comparePassword) {
         return next(ApiError.internal('Невірний пароль'));
       }
+      
       const userName = user.nickName;
       const userRole = user.role;
       const avatar = user.avatar;

@@ -15,6 +15,21 @@ const User = sequelize.define('user', {
     avatar: {type: DataTypes.STRING},
 });
 
+const SliderImage1 = sequelize.define('sliderImage', {
+    sliderImageName: {type: DataTypes.STRING},
+})
+
+const ClientBase = sequelize.define('clientBase', {
+    clientName: {type: DataTypes.STRING},
+    clientPhone: {type: DataTypes.INTEGER},
+    clientEmail: {type: DataTypes.STRING},
+    clientTelegram: {type: DataTypes.STRING},
+    clientOffer: {type: DataTypes.TEXT},
+    offerConfirmation: {type: DataTypes.BOOLEAN},
+    offerDetails: {type: DataTypes.TEXT},
+    date: {type: DataTypes.STRING}
+}) 
+
 const Basket = sequelize.define('basket', {
     id: { type: DataTypes.INTEGER, primaryKey: true },
 });
@@ -47,8 +62,10 @@ Basket.belongsTo(User);
 
 module.exports = {
     User,
+    ClientBase,
     Basket,
     Offers,
     Articles,
     Skill,
+    SliderImage1,
 };
